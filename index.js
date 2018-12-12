@@ -14,11 +14,6 @@ try {
   }
 }
 
-// const splitLines = input.split('\n')
-// .map(item => item.split(' '))
-// console.log(splitLines)
-// console.log(splitLines.length - 1)
-
 function robotHoover(){
     let data = {
         currentPosition: null,
@@ -33,7 +28,6 @@ function robotHoover(){
             const splitLines = input.split('\n')
                                     .map(item => item.split(' '))
 
-            
             data.room = splitLines[0]
             data.currentPosition = splitLines[1]
             data.directions = splitLines[splitLines.length -1]
@@ -45,35 +39,17 @@ function robotHoover(){
             return data
         },
 
-        checkBoundary(prospectivePosition){
-            if (prospectivePosition[0] > data.room[0] ){
-                return data.currentPosition
-            }
-            if (prospectivePosition[1] > data.room[1]){
-                return data.currentPosition
-            }
-            if (prospectivePosition[0] < 0){
-                return data.currentPosition
-            }
-            if (prospectivePosition[1] < 0){
-                return data.currentPosition
-            }
-            return prospectivePosition
-        },
-
         runHoover(){
+            function checkForDirt(position){
+
+            }
 
             function checkBoundary(prospectivePosition, axis){
-                if (prospectivePosition > data.room[axis] ){
-                    return data.currentPosition
-                }
-                if (prospectivePosition > data.room[axis]){
+                if (prospectivePosition > data.room[axis] || prospectivePosition < 1){
                     return data.currentPosition[axis]
+                }else{
+                    return prospectivePosition 
                 }
-                if (prospectivePosition < 0){
-                    return data.currentPosition[axis]
-                }
-                return prospectivePosition
             }
 
             data.directions.forEach(item => {
@@ -81,19 +57,23 @@ function robotHoover(){
                 data.currentPosition[1] = Number(data.currentPosition[1])
                 console.log(item)
                 if (item === "N"){
-                    const nextPosition = checkBoundary(data.currentPosition[1] += 1, 1)
+                    const prospectivePosition =  data.currentPosition[1] + 1
+                    const nextPosition = checkBoundary(prospectivePosition, 1)
                     data.currentPosition[1] = nextPosition
                 }
                 if (item === "E"){
-                    const nextPosition = checkBoundary(data.currentPosition[0] -= 1, 0)
+                    const prospectivePosition = data.currentPosition[0] + 1
+                    const nextPosition = checkBoundary(prospectivePosition, 0)
                     data.currentPosition[0] = nextPosition
                 }
                 if (item === "S"){
-                    const nextPosition = checkBoundary(data.currentPosition[1] -= 1, 1)
+                    const prospectivePosition = data.currentPosition[1] - 1
+                    const nextPosition = checkBoundary(prospectivePosition, 1)
                     data.currentPosition[1] = nextPosition
                 }
                 if (item === "W"){
-                    const nextPosition = checkBoundary(data.currentPosition[0] += 1, 0)
+                    const prospectivePosition = data.currentPosition[0] - 1
+                    const nextPosition = checkBoundary(prospectivePosition, 0)
                     data.currentPosition[0] = nextPosition
                 }
                 console.log(data.currentPosition)
@@ -108,5 +88,7 @@ function robotHoover(){
 const {addInstructions, returnData, checkBoundary, runHoover} = robotHoover()
 
 addInstructions(input)
+const data = returnData()
 runHoover()
 
+console.log(data.dirtPatches.includes(["2", "2"]))
