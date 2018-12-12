@@ -36,6 +36,9 @@ function robotHoover(){
             data.dirtPatches = data.dirtPatches.map(item => {
                 return item.join("")
             }).concat()
+            data.cleanCount = 0
+
+            return data
         },
 
         returnData(){
@@ -94,5 +97,8 @@ function robotHoover(){
 const {addInstructions, returnData, checkBoundary, runHoover} = robotHoover()
 
 addInstructions(input)
-const data = returnData()
+console.log(returnData())
 runHoover()
+
+
+module.exports = {addInstructions, returnData, runHoover}
