@@ -36,12 +36,16 @@ function robotHoover(){
             
             data.room = splitLines[0]
             data.currentPosition = splitLines[1]
-            data.directions = splitLines[splitLines.length -1]
+            data.directions = [...splitLines[splitLines.length -1]]
             data.dirtPatches = splitLines.filter((item, index) => index !== 0 && index !== 1 && index !== splitLines.length -1)
         },
 
         returnData(){
             return data
+        },
+
+        runHoover(){
+
         }
     }
 }
