@@ -20,6 +20,7 @@ function robotHoover(){
         room: [],
         dirtPatches: [],
         directions: [],
+        cleanCount: 0
 
     }
 
@@ -33,6 +34,9 @@ function robotHoover(){
             data.directions = splitLines[splitLines.length -1]
             data.directions = data.directions[0].split("")
             data.dirtPatches = splitLines.filter((item, index) => index !== 0 && index !== 1 && index !== splitLines.length -1)
+            data.dirtPatches = data.dirtPatches.map(item => {
+                return item.join("")
+            }).concat()
         },
 
         returnData(){
@@ -41,7 +45,11 @@ function robotHoover(){
 
         runHoover(){
             function checkForDirt(position){
-
+                if (data.dirtPatches.includes(position.join(""))){
+                    data.cleanCount += 1
+                    data.dirtPatches = data.dirtPatches.filter(dirtpatch => dirtpatch !== position.join(""))
+                    console.log('patch cleaned')
+                }
             }
 
             function checkBoundary(prospectivePosition, axis){
@@ -77,6 +85,7 @@ function robotHoover(){
                     data.currentPosition[0] = nextPosition
                 }
                 console.log(data.currentPosition)
+                checkForDirt(data.currentPosition)
                 
             })
                 console.log(data)
@@ -90,5 +99,3 @@ const {addInstructions, returnData, checkBoundary, runHoover} = robotHoover()
 addInstructions(input)
 const data = returnData()
 runHoover()
-
-console.log(data.dirtPatches.includes(["2", "2"]))
