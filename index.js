@@ -21,7 +21,6 @@ function robotHoover(){
         dirtPatches: [],
         directions: [],
         cleanCount: 0
-
     }
 
     return {
@@ -47,8 +46,7 @@ function robotHoover(){
             function checkForDirt(position){
                 if (data.dirtPatches.includes(position.join(""))){
                     data.cleanCount += 1
-                    data.dirtPatches = data.dirtPatches.filter(dirtpatch => dirtpatch !== position.join(""))
-                    console.log('patch cleaned')
+                    data.dirtPatches = data.dirtPatches.filter(dirtPatch => dirtPatch !== position.join(""))
                 }
             }
 
@@ -63,7 +61,6 @@ function robotHoover(){
             data.directions.forEach(item => {
                 data.currentPosition[0] = Number(data.currentPosition[0])
                 data.currentPosition[1] = Number(data.currentPosition[1])
-                console.log(item)
                 if (item === "N"){
                     const prospectivePosition =  data.currentPosition[1] + 1
                     const nextPosition = checkBoundary(prospectivePosition, 1)
@@ -84,11 +81,11 @@ function robotHoover(){
                     const nextPosition = checkBoundary(prospectivePosition, 0)
                     data.currentPosition[0] = nextPosition
                 }
-                console.log(data.currentPosition)
                 checkForDirt(data.currentPosition)
                 
             })
-                console.log(data)
+                console.log(data.currentPosition)
+                console.log(data.cleanCount)
         }
     }
 }
