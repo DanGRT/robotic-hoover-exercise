@@ -6,7 +6,7 @@ function robotHoover(){
     let data = {
         currentPosition: {},
         room: {},
-        dirtPatches: [],
+        dirtPatches: {},
         directions: [],
         cleanCount: 0
     }
@@ -31,7 +31,6 @@ function robotHoover(){
                                                .concat()
             
             clonedData.cleanCount = 0 // ensure cleanCount is reset to 0
-            console.log(clonedData)
             return clonedData
         },
 
@@ -39,7 +38,7 @@ function robotHoover(){
         //     checkBoundary and checkForDirt are imported from helperFunctions.js
         runHoover(data){
             let clonedData = Object.assign({}, data)
-            clonedData.directions.forEach(direction => {)
+            clonedData.directions.forEach(direction => {
                 if (direction === "N"){
                     const prospectivePosition =  clonedData.currentPosition["y"] + 1
                     clonedData = checkBoundary(clonedData, prospectivePosition, "y")
@@ -95,8 +94,8 @@ const hooverWithInstructions = addInstructions(input)
 const hooverReport = runHoover(hooverWithInstructions)
 
 // print output as requested in spec
-console.log(hooverReport.currentPosition)
-console.log(hooverReport.cleanCount)
+console.log(`Final Position:`, hooverReport.currentPosition)
+console.log(`Spots Cleaned: ${hooverReport.cleanCount}`)
 
 
 
