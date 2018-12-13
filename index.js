@@ -18,12 +18,19 @@ function robotHoover(){
 
             const splitLines = input.split('\n')
                                     .map(item => item.split(' '))
-                                    
-            clonedData.room = {x: Number(splitLines[0][0]), y: Number(splitLines[0][1])} // line 0 is room dimensions
 
-            clonedData.currentPosition = {x: Number(splitLines[1][0]), y: Number(splitLines[1][1])} //line 1 is starting position
+            // line 0 is room dimensions
+            clonedData.room = {
+                x: Number(splitLines[0][0]),
+                y: Number(splitLines[0][1])} 
 
-            clonedData.directions = splitLines[splitLines.length -1][0].split("") //final line contains directions
+            //line 1 is starting position
+            clonedData.currentPosition = {
+                x: Number(splitLines[1][0]),
+                y: Number(splitLines[1][1])} 
+            
+            //final line contains directions
+            clonedData.directions = splitLines[splitLines.length -1][0].split("") 
 
             // All remaining lines are positions of dirt patches
             clonedData.dirtPatches = splitLines.filter((item, index) => index !== 0 && index !== 1 && index !== splitLines.length -1)
