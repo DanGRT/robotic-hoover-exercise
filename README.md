@@ -10,7 +10,7 @@ Tech test for a company
 
 * enter `npm install` or `yarn` into your terminal to install dependencies
 
-* enter `node index.js` to execute the program
+* enter `node index.js` in terminal to execute the program
 
 ## To Run Tests:
 
