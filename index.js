@@ -60,7 +60,7 @@ function robotHoover(){
                 return clonedData
             }
 
-            function checkBoundary(prospectivePosition, axis){
+            function checkBoundary(data, prospectivePosition, axis){
                 let clonedData = Object.assign({}, data)
                 if ( prospectivePosition < clonedData.room[axis] || prospectivePosition > 1){
                      clonedData.currentPosition[axis] = prospectivePosition
@@ -73,21 +73,21 @@ function robotHoover(){
                 data.currentPosition[1] = Number(data.currentPosition[1])
                 if (item === "N"){
                     const prospectivePosition =  data.currentPosition[1] + 1
-                    data = checkBoundary(prospectivePosition, 1)
+                    data = checkBoundary(data, prospectivePosition, 1)
                 }
                 if (item === "E"){
                     const prospectivePosition = data.currentPosition[0] + 1
-                    data = checkBoundary(prospectivePosition, 0)
+                    data = checkBoundary(data, prospectivePosition, 0)
                     
                 }
                 if (item === "S"){
                     const prospectivePosition = data.currentPosition[1] - 1
-                    data = checkBoundary(prospectivePosition, 1)
+                    data = checkBoundary(data, prospectivePosition, 1)
                     
                 }
                 if (item === "W"){
                     const prospectivePosition = data.currentPosition[0] - 1
-                    data = checkBoundary(prospectivePosition, 0)
+                    data = checkBoundary(data, prospectivePosition, 0)
                 }
                 data = checkForDirt(data)
                 
