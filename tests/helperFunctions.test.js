@@ -1,4 +1,4 @@
-const helperFunctions = require('./helperFunctions.js')
+const helperFunctions = require('../helperFunctions.js')
 
 describe('helper functions', () => {
     it('checkForDirt returns correct object if hoover is on dirtpatch when run', () => {

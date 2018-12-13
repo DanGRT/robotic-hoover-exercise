@@ -1,4 +1,4 @@
-const hooverMethods = require('./index.js')
+const hooverMethods = require('../index.js')
 
 describe('robot hoover', () => {
     it('data from file gets formatted correctly by addInstructions', () => {
