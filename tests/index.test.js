@@ -5,9 +5,9 @@ describe('robot hoover', () => {
         const mockTextFile = `5 5\n1 2\n1 0\n2 2\n2 3\nNNESEESWNWW`
         const output = hooverMethods.addInstructions(mockTextFile)
         const expectedOutput = {
-            currentPosition: ["1", "2"],
-            room: ["5", "5"],
-            dirtPatches: ['10', '22', '23'],
+            currentPosition: {x: 1, y: 2},
+            room: {x: 5, y: 5},
+            dirtPatches: [{x: 1, y: 0}, {x: 2, y: 2}, {x: 2, y: 3}],
             directions: [ 'N', 'N', 'E', 'S', 'E', 'E', 'S', 'W', 'N', 'W', 'W' ],
             cleanCount: 0
         }
@@ -16,20 +16,22 @@ describe('robot hoover', () => {
     })
     it('run hoover returns the correct cloned modified data object', () => {
         const data = {
-            currentPosition: ["1", "2"],
-            room: ["5", "5"],
-            dirtPatches: ['10', '22', '23'],
+            currentPosition: {x: 1, y: 2},
+            room: {x: 5, y: 5},
+            dirtPatches: [{x: 1, y: 0}, {x: 2, y: 2}, {x: 2, y: 3}],
             directions: [ 'N', 'N', 'E', 'S', 'E', 'E', 'S', 'W', 'N', 'W', 'W' ],
             cleanCount: 0
         }
 
         const output = hooverMethods.runHoover(data)
 
-        const expectedOutput = { currentPosition: [ 1, 3 ],
-            room: [ '5', '5' ],
-            dirtPatches: [ '10', '22' ],
+        const expectedOutput = {
+            currentPosition: {x: 1, y: 3},
+            room: {x: 5, y: 5},
+            dirtPatches: [{x: 1, y: 0}, {x: 2, y: 2}],
             directions: [ 'N', 'N', 'E', 'S', 'E', 'E', 'S', 'W', 'N', 'W', 'W' ],
-            cleanCount: 1 }
+            cleanCount: 1
+        }
 
             //correct output
             expect(output).toEqual(expectedOutput)

@@ -18,7 +18,7 @@ function robotHoover(){
 
             const splitLines = input.split('\n')
                                     .map(item => item.split(' '))
-
+                                    
             clonedData.room = {x: Number(splitLines[0][0]), y: Number(splitLines[0][1])} // line 0 is room dimensions
 
             clonedData.currentPosition = {x: Number(splitLines[1][0]), y: Number(splitLines[1][1])} //line 1 is starting position
