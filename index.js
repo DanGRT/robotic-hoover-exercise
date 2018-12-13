@@ -50,6 +50,7 @@ function robotHoover(){
         },
 
         // Key function - runs through directions until complete
+        // checkBoundary and checkForDirt are imported from helperFunctions.js
         runHoover(data){
             let clonedData = Object.assign({}, data)
             clonedData.directions.forEach(direction => {
@@ -84,9 +85,12 @@ function robotHoover(){
 
 const {addInstructions, returnData, runHoover} = robotHoover()
 
+//add file to hoover and run
 const hooverWithInstructions = addInstructions(input)
 const hooverReport = runHoover(hooverWithInstructions)
 
+console.log(hooverReport)
+// print output as requested in spec
 console.log(hooverReport.currentPosition[0], hooverReport.currentPosition[1])
 console.log(hooverReport.cleanCount)
 
