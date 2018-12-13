@@ -15,7 +15,7 @@ try {
 }
 
 function robotHoover(){
-    const data = {
+    let data = {
         currentPosition: null,
         room: [],
         dirtPatches: [],
@@ -51,19 +51,21 @@ function robotHoover(){
 
         // Key function - runs through directions until complete
         runHoover(){
-            function checkForDirt(position){
-                if (data.dirtPatches.includes(position.join(""))){
-                    data.cleanCount += 1
-                    data.dirtPatches = data.dirtPatches.filter(dirtPatch => dirtPatch !== position.join(""))
+            function checkForDirt(data){
+                let clonedData = Object.assign({}, data)
+                if (clonedData.dirtPatches.includes(clonedData.currentPosition.join(""))){
+                    clonedData.cleanCount += 1
+                    clonedData.dirtPatches = clonedData.dirtPatches.filter(dirtPatch => dirtPatch !== clonedData.currentPosition.join(""))
                 }
+                return clonedData
             }
 
             function checkBoundary(prospectivePosition, axis){
-                if (prospectivePosition > data.room[axis] || prospectivePosition < 1){
-                    return data.currentPosition[axis]
-                }else{
-                    return prospectivePosition 
+                let clonedData = Object.assign({}, data)
+                if ( prospectivePosition < clonedData.room[axis] || prospectivePosition > 1){
+                     clonedData.currentPosition[axis] = prospectivePosition
                 }
+                return clonedData
             }
 
             data.directions.forEach(item => {
@@ -71,25 +73,23 @@ function robotHoover(){
                 data.currentPosition[1] = Number(data.currentPosition[1])
                 if (item === "N"){
                     const prospectivePosition =  data.currentPosition[1] + 1
-                    const nextPosition = checkBoundary(prospectivePosition, 1)
-                    data.currentPosition[1] = nextPosition
+                    data = checkBoundary(prospectivePosition, 1)
                 }
                 if (item === "E"){
                     const prospectivePosition = data.currentPosition[0] + 1
-                    const nextPosition = checkBoundary(prospectivePosition, 0)
-                    data.currentPosition[0] = nextPosition
+                    data = checkBoundary(prospectivePosition, 0)
+                    
                 }
                 if (item === "S"){
                     const prospectivePosition = data.currentPosition[1] - 1
-                    const nextPosition = checkBoundary(prospectivePosition, 1)
-                    data.currentPosition[1] = nextPosition
+                    data = checkBoundary(prospectivePosition, 1)
+                    
                 }
                 if (item === "W"){
                     const prospectivePosition = data.currentPosition[0] - 1
-                    const nextPosition = checkBoundary(prospectivePosition, 0)
-                    data.currentPosition[0] = nextPosition
+                    data = checkBoundary(prospectivePosition, 0)
                 }
-                checkForDirt(data.currentPosition)
+                data = checkForDirt(data)
                 
             })
                 console.log(data.currentPosition)
