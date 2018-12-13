@@ -8,9 +8,12 @@
 
 function checkForDirt(data){
     let clonedData = Object.assign({}, data)
-    if (clonedData.dirtPatches.includes(clonedData.currentPosition.join(""))){
+    const dirtPatchesForComparison = clonedData.dirtPatches.map(item => Object.values(item).join(""))
+    const currentPosForComparison = Object.values(clonedData.currentPosition).join("")
+
+    if (dirtPatchesForComparison.includes(currentPosForComparison)){
         clonedData.cleanCount += 1
-        clonedData.dirtPatches = clonedData.dirtPatches.filter(dirtPatch => dirtPatch !== clonedData.currentPosition.join(""))
+        clonedData.dirtPatches = clonedData.dirtPatches.filter(dirtPatch => Object.values(dirtPatch).join("") !== Object.values(clonedData.currentPosition).join(""))
     }
     return clonedData
 }
