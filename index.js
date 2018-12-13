@@ -1,22 +1,10 @@
 const fs = require('fs')
 const {checkBoundary, checkForDirt} = require('./helperFunctions.js')
 
-let input = {}
-try {
-  // try to read existing txt file
-  input = fs.readFileSync('./input.txt', 'utf8')
-} catch (error) {
-  // if the file doesn't exist
-  if (error.code === 'ENOENT') {
-    console.info('No input text file available');
-  } else {
-    console.warn('While loading text file', error.message)
-  }
-}
 
 function robotHoover(){
     let data = {
-        currentPosition: null,
+        currentPosition: [],
         room: [],
         dirtPatches: [],
         directions: [],
@@ -25,28 +13,24 @@ function robotHoover(){
 
     return {
         // function takes data extracted from text file and formats into data object
-        addInstructions(input){
+        addInstructions(input, data = this.data){
+            const clonedData = Object.assign({}, data)
             const splitLines = input.split('\n')
                                     .map(item => item.split(' '))
 
-            data.room = splitLines[0] // line 0 is room dimensions
-            data.currentPosition = splitLines[1] //line 1 is starting position
-            data.directions = splitLines[splitLines.length -1] //final line contains directions
-            data.directions = data.directions[0].split("")
+            clonedData.room = splitLines[0] // line 0 is room dimensions
+            clonedData.currentPosition = splitLines[1] //line 1 is starting position
+            clonedData.directions = splitLines[splitLines.length -1] //final line contains directions
+            clonedData.directions = clonedData.directions[0].split("")
             // All remaining lines are positions of dirt patches
-            data.dirtPatches = splitLines.filter((item, index) => index !== 0 && index !== 1 && index !== splitLines.length -1)
-            data.dirtPatches = data.dirtPatches.map(item => {
+            clonedData.dirtPatches = splitLines.filter((item, index) => index !== 0 && index !== 1 && index !== splitLines.length -1)
+            clonedData.dirtPatches = clonedData.dirtPatches.map(item => {
                 return item.join("")
             }).concat()
             
-            data.cleanCount = 0 // ensure cleanCount is reset to 0
+            clonedData.cleanCount = 0 // ensure cleanCount is reset to 0
 
-            return data
-        },
-
-        // returns data for development purposes
-        returnData(){
-            return data
+            return clonedData
         },
 
         // Key function - runs through directions until complete
@@ -83,16 +67,38 @@ function robotHoover(){
 }
 
 
-const {addInstructions, returnData, runHoover} = robotHoover()
+/*
+
+     Main program
+     ------------
+
+*/
+
+const {addInstructions, runHoover} = robotHoover()
+
+// Read input.txt
+let input = {}
+try {
+  // try to read existing txt file
+  input = fs.readFileSync('./input.txt', 'utf8')
+} catch (error) {
+  // if the file doesn't exist
+  if (error.code === 'ENOENT') {
+    console.info('No input text file available');
+  } else {
+    console.warn('While loading text file', error.message)
+  }
+}
 
 //add file to hoover and run
 const hooverWithInstructions = addInstructions(input)
 const hooverReport = runHoover(hooverWithInstructions)
 
-console.log(hooverReport)
 // print output as requested in spec
 console.log(hooverReport.currentPosition[0], hooverReport.currentPosition[1])
 console.log(hooverReport.cleanCount)
 
 
-module.exports = {addInstructions, returnData, runHoover}
+
+//exports for testing
+module.exports = {addInstructions, runHoover}
