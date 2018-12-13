@@ -12,6 +12,8 @@ Tech test for a company
 
 * enter `node index.js` in terminal to execute the program
 
+### Changing input:
+
 * If you wish to change the input for the program, input.txt can be modified along these lines:
 
 ```
@@ -22,10 +24,10 @@ Tech test for a company
 2 3
 NNESEESWNWW
 ```
-|the first line holds the room dimensions (X Y), separated by a single space (all coordinates will be presented in this format)
-|the second line holds the initial hoover position
-|subsequent lines contain the zero or more positions of patches of dirt (one per line)
-|the next line then always contains the driving instructions (at least one)
+* the first line holds the room dimensions (X Y), separated by a single space (all coordinates will be presented in this format)
+* the second line holds the initial hoover position
+* subsequent lines contain the zero or more positions of patches of dirt (one per line)
+* the next line then always contains the driving instructions (at least one)
 
 ## To Run Tests:
 
