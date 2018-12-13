@@ -15,7 +15,7 @@ try {
 }
 
 function robotHoover(){
-    let data = {
+    const data = {
         currentPosition: null,
         room: [],
         dirtPatches: [],
@@ -24,27 +24,32 @@ function robotHoover(){
     }
 
     return {
+        // function takes data extracted from text file and formats into data object
         addInstructions(input){
             const splitLines = input.split('\n')
                                     .map(item => item.split(' '))
 
-            data.room = splitLines[0]
-            data.currentPosition = splitLines[1]
-            data.directions = splitLines[splitLines.length -1]
+            data.room = splitLines[0] // line 0 is room dimensions
+            data.currentPosition = splitLines[1] //line 1 is starting position
+            data.directions = splitLines[splitLines.length -1] //final line contains directions
             data.directions = data.directions[0].split("")
+            // All remaining lines are positions of dirt patches
             data.dirtPatches = splitLines.filter((item, index) => index !== 0 && index !== 1 && index !== splitLines.length -1)
             data.dirtPatches = data.dirtPatches.map(item => {
                 return item.join("")
             }).concat()
-            data.cleanCount = 0
+            
+            data.cleanCount = 0 // ensure cleanCount is reset to 0
 
             return data
         },
 
+        // returns data for development purposes
         returnData(){
             return data
         },
 
+        // Key function - runs through directions until complete
         runHoover(){
             function checkForDirt(position){
                 if (data.dirtPatches.includes(position.join(""))){
@@ -97,7 +102,6 @@ function robotHoover(){
 const {addInstructions, returnData, checkBoundary, runHoover} = robotHoover()
 
 addInstructions(input)
-console.log(returnData())
 runHoover()
 
 

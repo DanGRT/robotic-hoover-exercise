@@ -1,7 +1,7 @@
 const hooverMethods = require('./index.js')
 
 describe('robot hoover', () => {
-    it('does data from file gets formatted correctly by addInstructions', () => {
+    it('data from file gets formatted correctly by addInstructions', () => {
         const mockTextFile = `5 5\n1 2\n1 0\n2 2\n2 3\nNNESEESWNWW`
         const output = hooverMethods.addInstructions(mockTextFile)
         const expectedOutput = {
