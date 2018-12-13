@@ -1,5 +1,5 @@
 const fs = require('fs')
-
+const {checkBoundary, checkForDirt} = require('./helperFunctions.js')
 
 let input = {}
 try {
@@ -51,43 +51,25 @@ function robotHoover(){
 
         // Key function - runs through directions until complete
         runHoover(data){
-            function checkForDirt(data){
-                let clonedData = Object.assign({}, data)
-                if (clonedData.dirtPatches.includes(clonedData.currentPosition.join(""))){
-                    clonedData.cleanCount += 1
-                    clonedData.dirtPatches = clonedData.dirtPatches.filter(dirtPatch => dirtPatch !== clonedData.currentPosition.join(""))
-                }
-                return clonedData
-            }
-
-            function checkBoundary(data, prospectivePosition, axis){
-                let clonedData = Object.assign({}, data)
-                if ( prospectivePosition < clonedData.room[axis] || prospectivePosition > 1){
-                     clonedData.currentPosition[axis] = prospectivePosition
-                }
-                return clonedData
-            }
-
             let clonedData = Object.assign({}, data)
-
-            clonedData.directions.forEach(item => {
+            clonedData.directions.forEach(direction => {
                 clonedData.currentPosition[0] = Number(clonedData.currentPosition[0])
                 clonedData.currentPosition[1] = Number(clonedData.currentPosition[1])
-                if (item === "N"){
+                if (direction === "N"){
                     const prospectivePosition =  clonedData.currentPosition[1] + 1
                     clonedData = checkBoundary(clonedData, prospectivePosition, 1)
                 }
-                if (item === "E"){
+                if (direction === "E"){
                     const prospectivePosition = data.currentPosition[0] + 1
                     clonedData = checkBoundary(clonedData, prospectivePosition, 0)
                     
                 }
-                if (item === "S"){
+                if (direction === "S"){
                     const prospectivePosition = clonedData.currentPosition[1] - 1
                     clonedData = checkBoundary(clonedData, prospectivePosition, 1)
                     
                 }
-                if (item === "W"){
+                if (direction === "W"){
                     const prospectivePosition = clonedData.currentPosition[0] - 1
                     clonedData= checkBoundary(clonedData, prospectivePosition, 0)
                 }
@@ -100,10 +82,13 @@ function robotHoover(){
 }
 
 
-const {addInstructions, returnData, checkBoundary, runHoover} = robotHoover()
+const {addInstructions, returnData, runHoover} = robotHoover()
 
 const hooverWithInstructions = addInstructions(input)
-console.log(runHoover(hooverWithInstructions))
+const hooverReport = runHoover(hooverWithInstructions)
+
+console.log(hooverReport.currentPosition[0], hooverReport.currentPosition[1])
+console.log(hooverReport.cleanCount)
 
 
 module.exports = {addInstructions, returnData, runHoover}
