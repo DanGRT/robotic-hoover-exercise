@@ -50,7 +50,7 @@ function robotHoover(){
         },
 
         // Key function - runs through directions until complete
-        runHoover(){
+        runHoover(data){
             function checkForDirt(data){
                 let clonedData = Object.assign({}, data)
                 if (clonedData.dirtPatches.includes(clonedData.currentPosition.join(""))){
@@ -68,32 +68,33 @@ function robotHoover(){
                 return clonedData
             }
 
-            data.directions.forEach(item => {
-                data.currentPosition[0] = Number(data.currentPosition[0])
-                data.currentPosition[1] = Number(data.currentPosition[1])
+            let clonedData = Object.assign({}, data)
+
+            clonedData.directions.forEach(item => {
+                clonedData.currentPosition[0] = Number(clonedData.currentPosition[0])
+                clonedData.currentPosition[1] = Number(clonedData.currentPosition[1])
                 if (item === "N"){
-                    const prospectivePosition =  data.currentPosition[1] + 1
-                    data = checkBoundary(data, prospectivePosition, 1)
+                    const prospectivePosition =  clonedData.currentPosition[1] + 1
+                    clonedData = checkBoundary(clonedData, prospectivePosition, 1)
                 }
                 if (item === "E"){
                     const prospectivePosition = data.currentPosition[0] + 1
-                    data = checkBoundary(data, prospectivePosition, 0)
+                    clonedData = checkBoundary(clonedData, prospectivePosition, 0)
                     
                 }
                 if (item === "S"){
-                    const prospectivePosition = data.currentPosition[1] - 1
-                    data = checkBoundary(data, prospectivePosition, 1)
+                    const prospectivePosition = clonedData.currentPosition[1] - 1
+                    clonedData = checkBoundary(clonedData, prospectivePosition, 1)
                     
                 }
                 if (item === "W"){
-                    const prospectivePosition = data.currentPosition[0] - 1
-                    data = checkBoundary(data, prospectivePosition, 0)
+                    const prospectivePosition = clonedData.currentPosition[0] - 1
+                    clonedData= checkBoundary(clonedData, prospectivePosition, 0)
                 }
-                data = checkForDirt(data)
+                clonedData = checkForDirt(clonedData)
                 
             })
-                console.log(data.currentPosition)
-                console.log(data.cleanCount)
+                return clonedData
         }
     }
 }
@@ -101,8 +102,8 @@ function robotHoover(){
 
 const {addInstructions, returnData, checkBoundary, runHoover} = robotHoover()
 
-addInstructions(input)
-runHoover()
+const hooverWithInstructions = addInstructions(input)
+console.log(runHoover(hooverWithInstructions))
 
 
 module.exports = {addInstructions, returnData, runHoover}
